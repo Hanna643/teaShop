@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductType} from "../../../types/product.type";
-import {ProductService} from "../../../services/product.service";
+import { Component, OnInit } from '@angular/core';
+import { ProductType } from "../../../types/product.type";
+import { ProductService } from "../../../services/product.service";
 
 @Component({
   selector: 'products-component',
@@ -8,12 +8,18 @@ import {ProductService} from "../../../services/product.service";
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-
   public products: ProductType[] = [];
-  constructor(private productService: ProductService) {
-  }
-  ngOnInit() {
-    this.products = this.productService.getProducts();
-  }
 
+  constructor(private productService: ProductService) { }
+
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Ошибка загрузки товаров:', err);
+      }
+    });
+  }
 }

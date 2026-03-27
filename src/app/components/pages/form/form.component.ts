@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
-import {CartService} from "../../../services/cart.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from "@angular/forms";
+import { CartService } from "../../../services/cart.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'form-component',
@@ -17,14 +18,20 @@ export class FormComponent implements OnInit {
     address: ['', [Validators.required, Validators.pattern('^[a-zA-Zа-яА-ЯёЁ0-9\\s\\-/]+$')]],
     product: ['', [Validators.required]],
     comment: ['']
-  })
+  });
 
-  constructor(private fb: FormBuilder, private cartService: CartService) {
+  isSubmitting = false;
+  submitSuccess = false;
+  submitError = false;
 
-  }
+  constructor(
+    private fb: FormBuilder,
+    private cartService: CartService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-    // Получаем название товара из сервиса корзины и устанавливаем в поле product
+
     if (this.cartService.product) {
       this.checkoutForm.patchValue({
         product: this.cartService.product
@@ -33,26 +40,51 @@ export class FormComponent implements OnInit {
   }
 
   signIn(): void {
-    // Помечаем все поля как touched
+
     Object.keys(this.checkoutForm.controls).forEach(key => {
       const control = this.checkoutForm.get(key);
       control?.markAsTouched();
     });
 
-    if (this.checkoutForm.valid) {
-      console.log('Форма отправлена:', this.checkoutForm.value);
-      // Здесь логика отправки данных
+    if (this.checkoutForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      this.submitError = false;
 
-      // Показываем модальное окно
-      const modalElement = document.getElementById('successPopup');
-      if (modalElement) {
-        const modal = new (window as any).bootstrap.Modal(modalElement);
-        modal.show();
-      }
+      const formData = this.checkoutForm.value;
 
-      this.checkoutForm.reset();
+      this.http.post('https://testologia.ru/order-tea', formData).subscribe({
+        next: (response: any) => {
+          console.log('Ответ сервера:', response);
+
+          if (response && response.success === 1) {
+            this.submitSuccess = true;
+            this.submitError = false;
+
+            this.cartService.product = '';
+          } else {
+
+            this.submitError = true;
+            this.submitSuccess = false;
+          }
+
+          this.isSubmitting = false;
+        },
+        error: (error) => {
+          console.error('Ошибка при отправке заказа:', error);
+          this.submitError = true;
+          this.submitSuccess = false;
+          this.isSubmitting = false;
+        }
+      });
     } else {
       console.log('Форма не отправлена');
     }
+  }
+
+  resetForm(): void {
+    this.submitSuccess = false;
+    this.submitError = false;
+    this.checkoutForm.reset();
+    this.isSubmitting = false;
   }
 }

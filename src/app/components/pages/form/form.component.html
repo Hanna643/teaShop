@@ -1,11 +1,12 @@
 <section class="form wow animate__flip">
   <div class="container" id="container">
     <div class="formDiv">
-      <h2 class="fa-2x mt-5 text-center">Сделать заказ</h2>
+
+      <h2 *ngIf="!submitSuccess" class="fa-2x mt-5 text-center">Сделать заказ</h2>
       <div class="row">
 
-        <form class="col-xxl-6  col-lg-12 mx-auto row g-3 needs-validation" novalidate [formGroup]="checkoutForm">
-          <!-- Имя -->
+        <form *ngIf="!submitSuccess" class="col-xxl-6 col-lg-12 mx-auto row g-3 needs-validation" novalidate [formGroup]="checkoutForm">
+
           <div class="formInput col-md-4">
             <label for="validationFirstName" class="form-label">Имя</label>
             <input type="text" class="form-control" id="validationFirstName" formControlName="name" required>
@@ -15,12 +16,11 @@
                 Пожалуйста, введите имя
               </div>
               <div class="invalid-feedback" *ngIf="checkoutForm.get('name')?.errors?.['pattern']">
-                Имя доллжно состоять только из букв
+                Имя должно состоять только из букв
               </div>
             </div>
           </div>
 
-          <!-- Фамилия -->
           <div class="formInput col-md-4">
             <label for="validationLastName" class="form-label">Фамилия</label>
             <input type="text" class="form-control" id="validationLastName" formControlName="last_name" required>
@@ -30,12 +30,11 @@
                 Пожалуйста, введите фамилию
               </div>
               <div class="invalid-feedback" *ngIf="checkoutForm.get('last_name')?.errors?.['pattern']">
-                Фамилия доллжна состоять только из букв
+                Фамилия должна состоять только из букв
               </div>
             </div>
           </div>
 
-          <!-- Телефон -->
           <div class="formInput col-md-4">
             <label for="validationPhone" class="form-label">Телефон</label>
             <input type="tel" class="form-control" id="validationPhone" formControlName="phone" required>
@@ -50,18 +49,16 @@
             </div>
           </div>
 
-          <!-- Город -->
           <div class="formInput col-md-6">
             <label for="validationCity" class="form-label">Страна</label>
             <input type="text" class="form-control" id="validationCity" formControlName="country" required>
             <div class="invalid-feedback" *ngIf="checkoutForm.get('country')?.invalid
               && (checkoutForm.get('country')?.touched || checkoutForm.get('country')?.dirty)
               && checkoutForm.get('country')?.errors?.['required']">
-              Пожалуйста, укажите город
+              Пожалуйста, укажите страну
             </div>
           </div>
 
-          <!-- Индекс -->
           <div class="formInput col-md-6">
             <label for="validationZip" class="form-label">Индекс</label>
             <input type="text" class="form-control" id="validationZip" formControlName="zip" required>
@@ -72,7 +69,6 @@
             </div>
           </div>
 
-          <!-- Адрес -->
           <div class="formInput col-12">
             <label for="validationAddress" class="form-label">Адрес</label>
             <input type="text" class="form-control" id="validationAddress" formControlName="address" required>
@@ -87,7 +83,6 @@
             </div>
           </div>
 
-          <!-- Товар -->
           <div class="formInput col-12">
             <label for="validationProduct" class="form-label">Товар</label>
             <input type="text" class="form-control" id="validationProduct" formControlName="product" required readonly>
@@ -97,39 +92,35 @@
               Пожалуйста, выберите товар в нашем каталоге
             </div>
           </div>
-          <!-- Комментарий к заказу -->
+
           <div class="formInput col-12">
             <label for="validationInput" class="form-label">Комментарий к заказу</label>
             <textarea class="form-control" id="validationInput" formControlName="comment" rows="3"></textarea>
           </div>
 
-          <!-- Кнопка отправки -->
+          <div class="col-12" *ngIf="submitError">
+            <div class="alert alert-danger" role="alert">
+              Произошла ошибка. Попробуйте еще раз.
+            </div>
+          </div>
+
           <div class="col-3 d-inline-block">
-            <button id="btnOrder" class="btn btn-primary px-2 d-block w-100" type="submit" (click)="signIn()">
-              Отправить
+            <button id="btnOrder" class="btn btn-primary px-2 d-block w-100" type="submit" (click)="signIn()" [disabled]="isSubmitting">
+              {{ isSubmitting ? 'Отправка...' : 'Отправить' }}
             </button>
           </div>
         </form>
 
+        <div *ngIf="submitSuccess" class="col-xxl-6 col-lg-12 mx-auto text-center py-5">
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Спасибо за заказ!</h4>
+            <p>Ваш заказ успешно оформлен. Наш менеджер свяжется с вами в ближайшее время.</p>
+            <hr>
+            <a routerLink="/" class="btn btn-primary">Вернуться на главную</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
-
-  <div class="modal fade" id="successPopup" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Успешно!</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          Ваша заявка успешно отправлена!
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </section>

@@ -5,7 +5,7 @@
       </a>
       <div class="card-body">
         <h5 class="card-title">{{product.title}}</h5>
-        <p class="card-text">{{product.description}}</p>
+        <p class="card-text">{{product.description | truncate:95 }}</p>
         <a [routerLink]="['/products', product.id]" class="btnCard btn btn-primary">Подробнее</a>
       </div>
     </div>

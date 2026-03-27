@@ -1,35 +1,25 @@
 import { Injectable } from '@angular/core';
-import {ProductType} from "../types/product.type";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ProductType } from "../types/product.type";
 
 @Injectable()
 export class ProductService {
+  private apiUrl = 'https://testologia.ru/tea';
 
-  private products: ProductType[] = [
-    {
-      "id": 1,
-      "image": "http://testologia.ru/tea-images/product1.png",
-      "title": "Английский Садовник",
-      "price": 260,
-      "description": "Настоящий английский садовник всегда за натуральность..."
-    },
-    {
-      "id": 2,
-      "image": "http://testologia.ru/tea-images/product2.png",
-      "title": "Трое в Лодке",
-      "price": 270,
-      "description": "Настоящий английский садовник всегда за натуральность..."
-    }
-  ]
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  getProducts(): ProductType[] {
-    //ajax
-    return this.products;
-  }
-   getProduct(id: number): ProductType | undefined {
-    //ajax
-    return this.products.find(item => (item.id === id));
+  getProducts(): Observable<ProductType[]> {
+    return this.http.get<ProductType[]>(this.apiUrl);
   }
 
+  getProduct(id: number): Observable<ProductType | undefined> {
+    return new Observable(observer => {
+      this.getProducts().subscribe(products => {
+        const product = products.find(item => item.id === id);
+        observer.next(product);
+        observer.complete();
+      });
+    });
+  }
 }

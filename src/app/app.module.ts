@@ -12,6 +12,8 @@ import { ProductsComponent } from './components/pages/products/products.componen
 import { ProductComponent } from './components/pages/product/product.component';
 import {ProductService} from "./services/product.service";
 import { ProductCardComponent } from './components/common/product-card/product-card.component';
+import {HttpClientModule} from "@angular/common/http";
+import { TruncatePipe } from './pipe/truncate.pipe';
 
 
 
@@ -24,12 +26,14 @@ import { ProductCardComponent } from './components/common/product-card/product-c
     MainComponent,
     ProductsComponent,
     ProductComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]
