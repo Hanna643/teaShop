@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #076BFF;
+}
+
+.slick-prev:before {
+  content: "\f053";
+}
+.slick-next:before {
+  content: "\f054";
+}
+
+.slick-prev:hover, .slick-next:hover {
+  opacity: 0.8;
+}
+
+#accordion .accordion-icon {
+  color: white;
+  transition: transform 0.3s, color 0.3s;
+
+}
+
+
+
+
+
+
+

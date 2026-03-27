@@ -1,0 +1,15 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <div class="card" style="width: 25rem;">
+        <img src="{{product.image}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{product.title}}</h5>
+          <p class="card-text">{{product.description}}</p>
+          <p class="card-text">{{ product.price | currency:'BYN':'':'1.2-2'}} руб/100 г</p>
+          <button class="btn btn-primary" (click)="addToCart(product.title)">Купить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

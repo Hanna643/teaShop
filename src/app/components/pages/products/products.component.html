@@ -1,0 +1,10 @@
+<section class="products wow animate__swing mt-4">
+  <div class="container">
+    <h2 class="fa-2x  text-center mb-5">Наши чайные коллекции</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" >
+   <product-card *ngFor="let product of products" [product]="product"></product-card>
+  </div>
+
+  </div>
+</section>
