@@ -4,38 +4,35 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/common/header/header.component';
-import { FooterComponent } from './components/common/footer/footer.component';
-import { FormComponent } from './components/pages/form/form.component';
-import { MainComponent } from './components/pages/main/main.component';
-import { ProductsComponent } from './components/pages/products/products.component';
-import { ProductComponent } from './components/pages/product/product.component';
-import {ProductService} from "./services/product.service";
-import { ProductCardComponent } from './components/common/product-card/product-card.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import {ProductService} from "./shared/services/product.service";
 import {HttpClientModule} from "@angular/common/http";
-import { TruncatePipe } from './pipe/truncate.pipe';
+import { TruncatePipe } from './shared/pipe/truncate.pipe';
+import {ProductsModule} from "./views/products/products.module";
+import {HomeModule} from "./views/home/home.module";
+import {FormModule} from "./views/form/form.module";
+import {SharedModule} from "./shared/shared.module";
+
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    FormComponent,
-    MainComponent,
-    ProductsComponent,
-    ProductComponent,
-    ProductCardComponent,
-    TruncatePipe
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ProductsModule,
+    HomeModule,
+    FormModule,
+    SharedModule,
+
+    AppRoutingModule
   ],
-  providers: [ProductService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

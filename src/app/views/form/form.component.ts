@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { CartService } from "../../../services/cart.service";
+import { CartService } from "../../shared/services/cart.service";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
