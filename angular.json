@@ -23,13 +23,12 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/jquery-ui.min.css",
               "src/assets/css/slick.css",
               "src/assets/css/slick-theme.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/magnific-popup.css",
               "src/assets/css/hover-min.css",
-
               "src/styles.css"
             ],
             "scripts": [
@@ -37,8 +36,7 @@
               "src/assets/js/jquery-ui.min.js",
               "src/assets/js/jquery.magnific-popup.min.js",
               "src/assets/js/wow.min.js",
-              "src/assets/js/slick.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "src/assets/js/slick.min.js"
             ]
           },
           "configurations": {

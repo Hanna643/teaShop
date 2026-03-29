@@ -51,17 +51,29 @@
 </section>
 
 <!-- Попап  -->
-<div class="modal fade" id="teaCollectionPopup" tabindex="-1" data-bs-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Внимание!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body text-center">
-        <p class="fs-5 mb-4">Посмотрите наши чайные коллекции</p>
-        <button type="button" class="btn btn-primary btn-lg" (click)="goToProducts()">Смотреть</button>
-      </div>
-    </div>
+<!--<ng-template #popup let-modal>-->
+<!--<div class="modal fade" id="teaCollectionPopup" tabindex="-1" data-bs-backdrop="static">-->
+<!--  <div class="modal-dialog modal-dialog-centered">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title">Внимание!</h5>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body text-center">-->
+<!--        <p class="fs-5 mb-4">Посмотрите наши чайные коллекции</p>-->
+<!--        <button type="button" class="btn btn-primary btn-lg" (click)="goToProducts()">Смотреть</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--  </ng-template #content let-modal>-->
+<ng-template #teaPopup let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Внимание!</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
   </div>
-</div>
+  <div class="modal-body text-center">
+    <p class="fs-5 mb-4">Посмотрите наши чайные коллекции</p>
+    <button type="button" class="btn btn-primary btn-lg" (click)="goToProducts(modal)">Смотреть</button>
+  </div>
+</ng-template>

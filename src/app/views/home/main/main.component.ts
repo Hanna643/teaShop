@@ -1,8 +1,9 @@
-import {Component, AfterViewInit, OnInit, OnDestroy} from '@angular/core';
+import {Component, AfterViewInit, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, timer, Subscription} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 declare var $: any;
 declare var WOW: any;
@@ -16,10 +17,14 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private popupSubscription?: Subscription;
 
-  constructor(private router: Router) {
+  @ViewChild('teaPopup') teaPopupTemplate!: TemplateRef<any>;
+  private modalRef?: NgbModalRef;
+
+  constructor(private router: Router, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
+
     new WOW({
       animateClass: 'animate__animated',
     }).init();
@@ -68,18 +73,15 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private showPopup(): void {
-    const modalElement = document.getElementById('teaCollectionPopup');
-    if (modalElement) {
-      const modal = new (window as any).bootstrap.Modal(modalElement);
-      modal.show();
-    }
+    this.modalRef = this.modalService.open(this.teaPopupTemplate, {
+      centered: true,
+      // backdrop: 'static' // чтобы нельзя было закрыть кликом мимо (как у вас в коде)
+    });
   }
 
-  goToProducts(): void {
-    const modalElement = document.getElementById('teaCollectionPopup');
-    if (modalElement) {
-      const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-      modal?.hide();
+  goToProducts(modal: any): void {
+    if (modal) {
+      modal.close();
     }
     this.router.navigate(['/products']);
   }
@@ -88,8 +90,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
 
-    if (this.popupSubscription) {
-      this.popupSubscription.unsubscribe();
+    if (this.modalRef) {
+      this.modalRef.close();
     }
   }
 }
+
