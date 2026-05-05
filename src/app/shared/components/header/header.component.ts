@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header-component',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  searchQuery: string = '';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  onSearch(): void {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/products'], { queryParams: { search: this.searchQuery.trim() } });
+    }
+  }
 }

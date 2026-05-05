@@ -5,6 +5,7 @@ import {FooterComponent} from "./components/footer/footer.component";
 import {ProductCardComponent} from "./components/product-card/product-card.component";
 import {TruncatePipe} from "./pipe/truncate.pipe";
 import {RouterModule} from "@angular/router";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {RouterModule} from "@angular/router";
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
