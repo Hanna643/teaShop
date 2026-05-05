@@ -33,6 +33,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private applyFilter(): void {
+    if (!this.products.length) return;
     if (this.searchQuery.trim()) {
       const query = this.searchQuery.toLowerCase();
       this.filteredProducts = this.products.filter(product =>
